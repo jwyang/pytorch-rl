@@ -10,6 +10,8 @@ from torch.autograd import Variable
 from optims.helpers import adjust_learning_rate
 from core.agent import Agent
 
+import pdb
+
 class DQNAgent(Agent):
     def __init__(self, args, env_prototype, model_prototype, memory_prototype):
         super(DQNAgent, self).__init__(args, env_prototype, model_prototype, memory_prototype)
@@ -160,6 +162,7 @@ class DQNAgent(Agent):
 
     def _forward(self, observation):
         # Select an action.
+        # pdb.set_trace()
         state = self.memory.get_recent_state(observation)
         state_ts = torch.from_numpy(np.array(state)).unsqueeze(0).type(self.dtype)
         q_values_ts = self.model(Variable(state_ts, volatile=True)).data # NOTE: only doing inference here, so volatile=True
@@ -224,6 +227,8 @@ class DQNAgent(Agent):
         return
 
     def fit_model(self):
+
+        pdb.set_trace()
         # memory
         self.memory = self.memory_prototype(limit = self.memory_params.memory_size,
                                             window_length = self.memory_params.hist_len)

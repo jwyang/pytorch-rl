@@ -12,6 +12,7 @@ def loggerConfig(log_file, verbose=2):
    fileHandler = logging.FileHandler(log_file, 'w')
    fileHandler.setFormatter(formatter)
    logger.addHandler(fileHandler)
+   logger.addHandler(logging.StreamHandler())
    if verbose >= 2:
        logger.setLevel(logging.DEBUG)
    elif verbose >= 1:
